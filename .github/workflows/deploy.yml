@@ -21,11 +21,13 @@ jobs:
     - name: Login to ECR
       uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build & Push Docker image
+     - name: Build and Push Docker image
       run: |
-        docker build -t $ECR_REPO .
-        docker tag $ECR_REPO:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPO:latest
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPO:latest
+        IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}
+
+        docker build -t springboot-app .
+        docker tag springboot-app:latest $IMAGE_URI:latest
+        docker push $IMAGE_URI:latest
 
     - name: Force new deployment
       run: |
