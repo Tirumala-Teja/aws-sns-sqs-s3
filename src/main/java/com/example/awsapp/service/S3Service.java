@@ -32,7 +32,7 @@ public class S3Service {
           s3.putObject(
                   PutObjectRequest.builder()
                           .bucket(secret.getBucketName()) // bucket name comes from secret
-                          .key(file.getOriginalFilename())
+                          .key("original/" + file.getOriginalFilename())
                           .contentType(file.getContentType())
                           .build(),
                   RequestBody.fromBytes(file.getBytes())
